@@ -15,3 +15,12 @@ Code for processing and analyzing metabonomics data
 
 ## datamining_library_ge20200306.R
 Common self-built function library
+
+## CVDSBA_UMAP.Rmd
+Umap analysis and visualization
+
+## CVDSBA_heatmap.Rmd
+Heatmap analysis and visualization
+
+## CVDSBA_mfuzz.Rmd
+Mfuzz analysis and visualization
