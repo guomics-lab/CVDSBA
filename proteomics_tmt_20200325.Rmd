@@ -425,7 +425,7 @@ dev.off()
 
 boxplot
 ```{r}
-prot2 <- c("P02743","P02776","P02775","P02765","P35542","O95445","P04004")
+prot2 <- c("P01011","Q9UK55","P02741","Q86UD1","P13796","P0DJI8","P0DJI9")
 label <- info$Type[match(names(df2),info$TMT)]
 df4 <- df2[prot2,label!="NA"]
 label4 <- info$Type[match(names(df4),info$TMT)]
@@ -435,48 +435,18 @@ for (i in 1:nrow(df.nor)) {
   nm <- row.names(df.nor)[i]
   pv <- c()
   data1 <- data.frame(value=as.numeric(df.nor[i,]),type=label4)
-  a1 <- 0
-  b1 <- 0
-    for (a in lav) {
+  for (a in lav) {
     for (b in lav) {
-        if(a>=b){
-          next
-        }else{
+
         a_type <- which(label4 %in% a)
         b_type <- which(label4 %in% b)
         c <- t.test(df.nor[i,a_type],df.nor[i,b_type], paired = F, var.equal = F)$p.value
-        pv <- paste0(pv,"\n",a,"_",b,":",format(c,digits = 3, scientific = FALSE))
-        }
-      b1=b1+1
+        pv <- paste0(pv,paste0("  ",a,"_",b,":",format(c,digits = 3, scientific = FALSE)))
+      
     }
-      a1=a1+1
   }
-  
-  plot.boxplot <- function(data,x,y,type,filename,title="boxplot"){
-  a <- ggplot(data=data, aes(x =x, y =y ,color=type,group=type)) +
-    geom_jitter(alpha = 0.3,size=3) +
-    geom_boxplot(alpha = .5,size=1)+
-    labs(x="sample",y="value",fill= "type")+
-    ggtitle(title)+
-    theme_bw() + 
-    theme(panel.border = element_blank())+
-    theme(axis.line = element_line(size=1, colour = "black")) +
-    theme(panel.grid =element_blank())+  
-    theme(axis.text = element_text(size = 15,colour = "black"),text = element_text(size = 15,colour = "black"))+
-    theme(axis.text.x = element_text( hjust = 1,angle = 45))+
-    scale_x_discrete(limit=c("jkdz","jbdz","PT","ZX") )+
-    scale_color_manual(limits=c("jkdz","jbdz","PT","ZX"), values=c("#85B22E","#5F80B4","#E29827","#922927"))
-  ggsave(paste0(filename, ".pdf"),plot=a,width=8,height=8)
-}
-  plot.boxplot( data1,data1$type,data1$value,data1$type,paste0("prot7_boxplot/",i, "_boxplot"),title=paste0(nm, pv))
+  ge.plot.boxplot( data1,data1$type,data1$value,data1$type,paste0("prot7_boxplot/",nm, "_boxplot"),title=paste0(nm, pv))
 }
 
-
-
-which(grepl("choline",row.names(df2) ))
-
 ```
-
-```
-
 
